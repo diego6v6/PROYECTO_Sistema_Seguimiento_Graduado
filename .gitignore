@@ -1,0 +1,49 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+# Flutter generated
+**/ephemeral/
+
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Android
+android/.gradle/
+android/local.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# Configuración local / secretos
+config/local.json
+config/*.local.json
+.env
+.env.*
+
+# Claves y certificados
+*.jks
+*.keystore
+key.properties
+
+# Logs
+*.log
+
+# Cobertura
+coverage/
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# macOS
+.DS_Store
+
+
