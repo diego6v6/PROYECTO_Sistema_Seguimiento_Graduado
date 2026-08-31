@@ -71,9 +71,14 @@ El APK de demostración se encuentra disponible en la sección Releases del repo
 
 También puede generarse localmente mediante:
 
+```bash
 flutter build apk --release
+```
 
 # APK de producción conectado en Supabase
 
-flutter build apk --release --dart-define-from-file=config/local.json
 "ejecutar cuando tengas el supabase configurado"
+
+```bash
+flutter build apk --release --dart-define-from-file=config/local.json
+```
