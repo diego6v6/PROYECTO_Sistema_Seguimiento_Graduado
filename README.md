@@ -82,3 +82,53 @@ flutter build apk --release
 ```bash
 flutter build apk --release --dart-define-from-file=config/local.json
 ```
+
+# Estructura del proyecto
+
+PROYECTO_Sistema_Seguimiento_Graduado/
+│
+├── android/ # Configuración específica de Android
+├── assets/ # Recursos de la aplicación
+├── config/ # Archivos de configuración
+│ ├── demo.json
+│ └── local.example.json
+│
+├── lib/  
+| ├── config/ # Configuración de la aplicación
+| ├── conttrollers/ # Controladores de estado
+│ ├── models/ # Modelos de datos
+│ ├── repositories/ # Repositorios de datos
+│ ├── screens/ # Pantallas de la aplicación
+│ ├── services/ # Servicios y comunicación con Supabase
+│ ├── widgets/ # Componentes reutilizables
+│ └── main.dart # Punto de entrada de la aplicación
+│
+├── supabase/
+│ └── 01_schema_y_rls.sql # Estructura de BD y políticas RLS
+│
+├── test/ # Pruebas
+├── pubspec.yaml # Dependencias del proyecto
+└── README.md # Documentación del proyecto
+
+# Versión entregada
+
+Versión: 1.0.0
+
+La versión entregada corresponde a la versión funcional desarrollada como proyecto final del Diplomado UAJMS.
+
+# Limitaciones conocidas
+
+La aplicación está orientada principalmente a dispositivos Android.
+El funcionamiento del modo producción requiere una configuración válida de Supabase.
+Las funcionalidades disponibles dependen de la configuración de usuarios, permisos y políticas RLS establecidas en la base de datos.
+Autor
+
+# Autor
+
+Diego Abel Arenas Perez
+
+Proyecto final del Diplomado UAJMS.
+
+# Licencia
+
+Este proyecto fue desarrollado con fines académicos.
