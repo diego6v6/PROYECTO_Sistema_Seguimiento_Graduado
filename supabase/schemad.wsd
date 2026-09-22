@@ -1,0 +1,199 @@
+@startuml
+
+title Diagrama Entidad-Relación - Sistema de Seguimiento a Graduados
+
+hide methods
+hide stereotypes
+
+skinparam linetype ortho
+skinparam entity {
+    BackgroundColor #F8F9FA
+    BorderColor #343A40
+    FontColor #212529
+}
+
+' ============================================================
+' ROLES Y USUARIOS
+' ============================================================
+
+entity "roles" as roles {
+    * id : bigint <<PK>>
+    --
+    nombre : varchar(30) <<UK>>
+    descripcion : varchar(200)
+    created_at : timestamptz
+}
+
+entity "perfiles" as perfiles {
+    * id : uuid <<PK, FK>>
+    --
+    id_rol : bigint <<FK>>
+    nombres : varchar(100)
+    apellidos : varchar(100)
+    telefono : varchar(30)
+    estado : boolean
+    created_at : timestamptz
+    updated_at : timestamptz
+}
+
+entity "graduados" as graduados {
+    * id : uuid <<PK, FK>>
+    --
+    ci : varchar(30) <<UK>>
+    fecha_nacimiento : date
+    año_ingreso : integer
+    año_egreso : integer
+    año_titulacion : integer
+    modalidad_titulacion : varchar(100)
+    ciudad : varchar(100)
+    departamento : varchar(100)
+    direccion : varchar(255)
+    linkedin : varchar(255)
+    created_at : timestamptz
+    updated_at : timestamptz
+}
+
+' ============================================================
+' ENCUESTAS
+' ============================================================
+
+entity "encuestas" as encuestas {
+    * id : uuid <<PK>>
+    --
+    titulo : varchar(200)
+    descripcion : text
+    fecha_inicio : date
+    fecha_fin : date
+    estado : boolean
+    id_usuario_creador : uuid <<FK>>
+    created_at : timestamptz
+    updated_at : timestamptz
+}
+
+entity "preguntas" as preguntas {
+    * id : uuid <<PK>>
+    --
+    id_encuesta : uuid <<FK>>
+    pregunta : text
+    tipo : varchar(30)
+    obligatoria : boolean
+    orden : integer
+    valor_minimo : integer
+    valor_maximo : integer
+    etiqueta_minimo : varchar(100)
+    etiqueta_maximo : varchar(100)
+    created_at : timestamptz
+}
+
+entity "opciones_pregunta" as opciones {
+    * id : uuid <<PK>>
+    --
+    id_pregunta : uuid <<FK>>
+    opcion : varchar(255)
+    orden : integer
+    created_at : timestamptz
+}
+
+' ============================================================
+' RESPUESTAS
+' ============================================================
+
+entity "respuestas_encuesta" as respuestas_encuesta {
+    * id : uuid <<PK>>
+    --
+    id_encuesta : uuid <<FK>>
+    id_graduado : uuid <<FK>>
+    fecha_respuesta : timestamptz
+    estado : varchar(20)
+    created_at : timestamptz
+    updated_at : timestamptz
+}
+
+entity "respuestas" as respuestas {
+    * id : uuid <<PK>>
+    --
+    id_respuesta_encuesta : uuid <<FK>>
+    id_pregunta : uuid <<FK>>
+    respuesta_texto : text
+    id_opcion : uuid <<FK>>
+    created_at : timestamptz
+    updated_at : timestamptz
+}
+
+entity "respuestas_opciones" as respuestas_opciones {
+    * id : uuid <<PK>>
+    --
+    id_respuesta : uuid <<FK>>
+    id_opcion : uuid <<FK>>
+    created_at : timestamptz
+}
+
+' ============================================================
+' RECOMENDACIONES
+' ============================================================
+
+entity "recomendaciones" as recomendaciones {
+    * id : uuid <<PK>>
+    --
+    id_graduado : uuid <<FK>>
+    mensaje : text
+    fecha : timestamptz
+    estado : varchar(30)
+    respuesta_admin : text
+    id_usuario_revisor : uuid <<FK>>
+    fecha_revision : timestamptz
+    created_at : timestamptz
+    updated_at : timestamptz
+}
+
+' ============================================================
+' AUDITORÍA
+' ============================================================
+
+entity "auditoria" as auditoria {
+    * id : bigint <<PK>>
+    --
+    id_usuario : uuid <<FK>>
+    accion : varchar(100)
+    tabla_afectada : varchar(100)
+    id_registro : varchar(100)
+    descripcion : text
+    ip : varchar(50)
+    fecha : timestamptz
+}
+
+' ============================================================
+' RELACIONES
+' ============================================================
+
+roles ||--o{ perfiles : "asigna"
+
+perfiles ||--o| graduados : "corresponde a"
+
+perfiles ||--o{ encuestas : "crea"
+
+encuestas ||--o{ preguntas : "contiene"
+
+preguntas ||--o{ opciones : "tiene"
+
+encuestas ||--o{ respuestas_encuesta : "recibe"
+
+graduados ||--o{ respuestas_encuesta : "responde"
+
+respuestas_encuesta ||--o{ respuestas : "contiene"
+
+preguntas ||--o{ respuestas : "es respondida"
+
+opciones ||--o{ respuestas : "selección"
+
+respuestas ||--o{ respuestas_opciones : "contiene"
+
+opciones ||--o{ respuestas_opciones : "seleccionada"
+
+graduados ||--o{ recomendaciones : "envía"
+
+perfiles ||--o{ recomendaciones : "revisa"
+
+perfiles ||--o{ auditoria : "genera"
+
+@enduml
