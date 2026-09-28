@@ -1,134 +1,49 @@
-# Proyecto sistema de seguimiento a gradudos
+# Seguimiento al Graduado
 
-Aplicación móvil para la gestión y seguimiento de graduados de la carrera de Ingeniería Informática.
+Aplicación Flutter conectada a Supabase para seguimiento de graduados. Conserva un cliente único para Android y Web, con una experiencia según la plataforma y el rol:
 
-# Descripción del proyecto
+| Rol | APK | Web |
+|---|---|---|
+| `SUPER_ADMIN` | Home de graduado | Dashboard administrativo |
+| `ADMINISTRADOR` | Home de graduado | Dashboard administrativo |
+| `GRADUADO` | Home de graduado | Home de graduado; sin acceso administrativo |
 
-El Sistema de Seguimiento a Graduados fue desarrollado como proyecto final del Diplomado UAJMS.
+## Configuración local
 
-# Tecnologías utilizadas
-
-Flutter - Desarrollo de la aplicación móvil.
-Dart - Lenguaje de programación.
-Supabase - Backend, autenticación y base de datos.
-PostgreSQL - Sistema gestor de base de datos.
-Provider - Gestión del estado de la aplicación.
-SharedPreferences - Persistencia de preferencias locales.
-fl_chart - Generación de gráficos estadísticos.
-Supabase Auth - Autenticación de usuarios.
-Row Level Security (RLS) - Control de acceso a los datos.
-
-# Requisitos
-
-Para ejecutar el proyecto se necesita:
-
-Flutter SDK.
-Dart SDK.
-Android Studio o Visual Studio Code.
-Dispositivo Android o emulador.
-Cuenta de Supabase.
-Proyecto de Supabase configurado.
-
-# Instalación
-
-Clonar el repositorio:
-git clone URL_DEL_REPOSITORIO
-
-# Entrar en la carpeta del proyecto:
-
-cd PROYECTO_Sistema_Seguimiento_Graduado
-
-## 1. Levantar YA sin backend "Modo Demostracion"
-
-```bash
-flutter pub get
-flutter run --dart-define-from-file=config/demo.json
-```
-
-## 2. Conectar Supabase
-
-Configuración de Supabase
-Crear un proyecto en Supabase.
-
-Configurar la autenticación mediante:
-
-Authentication
-↓
-Email / Password
-Posteriormente ejecutar el script de base de datos incluido en:
-supabase/01_schema_y_rls.sql
-Este script crea las tablas, relaciones, funciones, triggers, índices y políticas RLS necesarias para el funcionamiento del sistema.
+`config/local.json` se mantiene fuera de Git. Cree una copia de la plantilla y agregue únicamente `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` (la clave `anon` legacy también es pública). No use claves `service_role` en el cliente.
 
 ```bash
 cp config/local.example.json config/local.json
-# editar local.json con las credenciales de Supabase
+# Complete la URL y la clave pública en config/local.json
+flutter pub get
 flutter run --dart-define-from-file=config/local.json
 ```
 
-# APK de demostración Modo Demostración
+Si falta la configuración, la aplicación muestra una pantalla explicativa; no arranca con datos simulados.
 
-El APK de demostración se encuentra disponible en la sección Releases del repositorio.
+## Supabase
 
-También puede generarse localmente mediante:
+La base y sus políticas existentes se describen en `supabase/01_schema_y_rls.sql`. Para habilitar las estadísticas agregadas del dashboard, ejecute además `supabase/02_admin_dashboard_stats.sql` en el SQL Editor de Supabase. La función reutiliza `obtener_rol_usuario()`, corre con permisos del invocador y no modifica RLS.
 
-```bash
-flutter build apk --release
-```
+Las estadísticas de egreso y departamento se omiten si esas columnas no tienen datos. La distribución de respuestas se calcula para las opciones seleccionadas (incluye checkbox); las respuestas de texto libre no tienen categorías y no se representan como distribución.
 
-# APK de producción conectado en Supabase
-
-"ejecutar cuando tengas el supabase configurado"
+## Compilación
 
 ```bash
 flutter build apk --release --dart-define-from-file=config/local.json
+flutter build web --release --dart-define-from-file=config/local.json
 ```
 
-# Estructura del proyecto
+También se pueden inyectar variables en CI mediante `--dart-define`:
 
-PROYECTO_Sistema_Seguimiento_Graduado/
-│
-├── android/ # Configuración específica de Android
-├── assets/ # Recursos de la aplicación
-├── config/ # Archivos de configuración
-│ ├── demo.json
-│ └── local.example.json
-│
-├── lib/  
-| ├── config/ # Configuración de la aplicación
-| ├── conttrollers/ # Controladores de estado
-│ ├── models/ # Modelos de datos
-│ ├── repositories/ # Repositorios de datos
-│ ├── screens/ # Pantallas de la aplicación
-│ ├── services/ # Servicios y comunicación con Supabase
-│ ├── widgets/ # Componentes reutilizables
-│ └── main.dart # Punto de entrada de la aplicación
-│
-├── supabase/
-│ └── 01_schema_y_rls.sql # Estructura de BD y políticas RLS
-│
-├── test/ # Pruebas
-├── pubspec.yaml # Dependencias del proyecto
-└── README.md # Documentación del proyecto
+```bash
+flutter build web --release \
+  --dart-define=SUPABASE_URL=https://TU-PROYECTO.supabase.co \
+  --dart-define=SUPABASE_PUBLISHABLE_KEY=TU_CLAVE_PUBLICA
+```
 
-# Versión entregada
+Cloudflare Pages debe publicar `build/web`. Flutter Web genera una SPA y el archivo `web/_redirects` configura el fallback de rutas. Configure `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` como variables de entorno de build en Pages y use `bash scripts/build_web_cloudflare.sh` como comando de build; no coloque secretos en los assets web.
 
-Versión: 1.0.0
+## Funcionalidades
 
-La versión entregada corresponde a la versión funcional desarrollada como proyecto final del Diplomado UAJMS.
-
-# Limitaciones conocidas
-
-La aplicación está orientada principalmente a dispositivos Android.
-El funcionamiento del modo producción requiere una configuración válida de Supabase.
-Las funcionalidades disponibles dependen de la configuración de usuarios, permisos y políticas RLS establecidas en la base de datos.
-Autor
-
-# Autor
-
-Diego Abel Arenas Perez
-
-Proyecto final del Diplomado UAJMS.
-
-# Licencia
-
-Este proyecto fue desarrollado con fines académicos.
+El Home de graduado contiene perfil, encuestas/responder, historial y recomendaciones. La Web administrativa añade estadísticas, resultados, gestión de recomendaciones y creación de encuestas. La app verifica sesión y rol con `obtener_rol_usuario()`; RLS sigue siendo la protección efectiva de los datos.

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'config/app_config.dart';
 import 'controllers/preferences_controller.dart';
 import 'screens/auth_gate.dart';
-import 'screens/home_screen.dart';
 import 'screens/setup_required_screen.dart';
 
 class ProyectoFinalApp extends StatelessWidget {
@@ -26,11 +25,10 @@ class ProyectoFinalApp extends StatelessWidget {
           colorSchemeSeed: Colors.indigo,
           useMaterial3: true,
           brightness: Brightness.dark),
-      home: config.demoMode
-          ? const HomeScreen()
-          : config.hasSupabaseConfig
-              ? const AuthGate()
-              : const SetupRequiredScreen(),
+      routes: {'/admin/dashboard': (_) => const AuthGate(dashboardRoute: true)},
+      home: config.hasSupabaseConfig
+          ? const AuthGate()
+          : const SetupRequiredScreen(),
     );
   }
 }

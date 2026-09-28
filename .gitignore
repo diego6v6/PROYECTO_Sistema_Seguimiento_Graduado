@@ -3,6 +3,7 @@
 .packages
 .pub/
 build/
+.wrangler/
 .flutter-plugins
 .flutter-plugins-dependencies
 .metadata

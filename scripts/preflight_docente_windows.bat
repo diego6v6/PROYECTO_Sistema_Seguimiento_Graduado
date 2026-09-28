@@ -8,4 +8,4 @@ flutter pub get || exit /b 1
 flutter analyze || exit /b 1
 flutter test || exit /b 1
 echo OK: pub get + analyze + test completados.
-echo Siguiente: scripts\run_demo_windows.bat
+echo Configure config\local.json y ejecute flutter run --dart-define-from-file=config/local.json

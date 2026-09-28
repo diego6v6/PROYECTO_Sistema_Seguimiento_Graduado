@@ -9,4 +9,4 @@ flutter pub get
 flutter analyze
 flutter test
 echo 'OK: pub get + analyze + test completados.'
-echo 'Siguiente: ./scripts/run_demo_linux.sh'
+echo 'Configure config/local.json y ejecute flutter run --dart-define-from-file=config/local.json'

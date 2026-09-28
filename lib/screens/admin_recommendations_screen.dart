@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -31,6 +32,14 @@ class _AdminRecommendationsScreenState
   // ==========================================================================
 
   Future<void> _inicializar() async {
+    if (!kIsWeb) {
+      if (mounted)
+        setState(() {
+          _autorizado = false;
+          _cargando = false;
+        });
+      return;
+    }
     try {
       final user = _supabase.auth.currentUser;
 
