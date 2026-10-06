@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/preferences_service.dart';
+import '../services/servicio_preferencias.dart';
 
 class PreferencesController extends ChangeNotifier {
   PreferencesController(this._service) {

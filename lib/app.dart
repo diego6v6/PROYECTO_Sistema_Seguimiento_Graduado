@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'config/app_config.dart';
-import 'controllers/preferences_controller.dart';
-import 'screens/auth_gate.dart';
-import 'screens/setup_required_screen.dart';
+import 'config/configuracion_aplicacion.dart';
+import 'controllers/controlador_preferencias.dart';
+import 'screens/control_acceso.dart';
+import 'screens/pantalla_configuracion_requerida.dart';
 
 class ProyectoFinalApp extends StatelessWidget {
   const ProyectoFinalApp({super.key});

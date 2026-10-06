@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'answer_survey_screen.dart';
+import 'pantalla_responder_encuesta.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});

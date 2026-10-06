@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'history_screen.dart';
-import 'profile_screen.dart';
-import 'recommendations_screen.dart';
-import 'surveys_screen.dart';
+import 'pantalla_historial.dart';
+import 'pantalla_perfil.dart';
+import 'pantalla_recomendaciones.dart';
+import 'pantalla_encuestas.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

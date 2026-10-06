@@ -6,9 +6,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'app.dart';
-import 'config/app_config.dart';
-import 'controllers/preferences_controller.dart';
-import 'services/preferences_service.dart';
+import 'config/configuracion_aplicacion.dart';
+import 'controllers/controlador_preferencias.dart';
+import 'services/servicio_preferencias.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

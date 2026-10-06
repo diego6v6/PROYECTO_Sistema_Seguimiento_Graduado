@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../auth/role_service.dart';
+import '../auth/servicio_roles.dart';
 
 class SurveyResultsScreen extends StatefulWidget {
   const SurveyResultsScreen({

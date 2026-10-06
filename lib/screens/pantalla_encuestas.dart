@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'answer_survey_screen.dart';
-import 'create_survey_screen.dart';
+import 'pantalla_responder_encuesta.dart';
+import 'pantalla_crear_encuesta.dart';
 
 class SurveysScreen extends StatefulWidget {
   const SurveysScreen({super.key});

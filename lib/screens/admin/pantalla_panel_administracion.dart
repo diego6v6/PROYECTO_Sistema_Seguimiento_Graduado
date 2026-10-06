@@ -2,11 +2,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../auth/role_service.dart';
-import '../../services/admin_dashboard_service.dart';
-import '../admin_recommendations_screen.dart';
-import '../create_survey_screen.dart';
-import '../survey_results_screen.dart';
+import '../../auth/servicio_roles.dart';
+import '../../services/servicio_panel_administracion.dart';
+import '../pantalla_recomendaciones_administracion.dart';
+import '../pantalla_crear_encuesta.dart';
+import '../pantalla_resultados_encuestas.dart';
 
 // Si ya tienes estas pantallas creadas, descomenta/importa sus archivos.
 // import '../admin_role_management_screen.dart';

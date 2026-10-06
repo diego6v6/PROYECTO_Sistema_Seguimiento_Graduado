@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../auth/role_service.dart';
-import 'admin/admin_dashboard_screen.dart';
-import 'home_screen.dart';
-import 'login_screen.dart';
+import '../auth/servicio_roles.dart';
+import 'admin/pantalla_panel_administracion.dart';
+import 'pantalla_inicio.dart';
+import 'pantalla_inicio_sesion.dart';
 
 class AuthGate extends StatefulWidget {
   const AuthGate({super.key, this.dashboardRoute = false});
