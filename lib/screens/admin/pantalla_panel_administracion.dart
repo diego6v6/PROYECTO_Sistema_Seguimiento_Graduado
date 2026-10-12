@@ -8,10 +8,10 @@ import '../pantalla_recomendaciones_administracion.dart';
 import '../pantalla_crear_encuesta.dart';
 import '../pantalla_resultados_encuestas.dart';
 
-// Si ya tienes estas pantallas creadas, descomenta/importa sus archivos.
-// import '../admin_role_management_screen.dart';
-// import '../admin_graduates_screen.dart';
-// import '../admin_audit_screen.dart';
+// Pantallas administrativas
+import '../../screens/admin/pantalla_gestion_roles.dart';
+import '../../screens/admin/pantalla_lista_graduados.dart';
+import '../../screens/admin/pantalla_auditoria.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -388,24 +388,24 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                               );
                             },
                             onRoles: () {
-                              _showComingSoon(
-                                context,
-                                'Gestión de roles',
-                                'Aquí se integrará la pantalla para que el SUPER_ADMIN pueda administrar los roles de los usuarios.',
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const GestionRolesScreen(),
+                                ),
                               );
                             },
                             onGraduates: () {
-                              _showComingSoon(
-                                context,
-                                'Gestión de graduados',
-                                'Aquí se integrará la gestión de perfiles y datos de graduados.',
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const ListaGraduadosScreen(),
+                                ),
                               );
                             },
                             onAudit: () {
-                              _showComingSoon(
-                                context,
-                                'Auditoría',
-                                'Aquí se integrará el registro de acciones administrativas.',
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const AuditoriaScreen(),
+                                ),
                               );
                             },
                           ),
