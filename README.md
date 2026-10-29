@@ -1,49 +1,85 @@
-# Seguimiento al Graduado
+Proyecto Sistema de Seguimiento a Graduados
 
-Aplicación Flutter conectada a Supabase para seguimiento de graduados. Conserva un cliente único para Android y Web, con una experiencia según la plataforma y el rol:
+Aplicación web y móvil para la gestión y seguimiento de graduados de la carrera de Ingeniería Informática.
 
-| Rol | APK | Web |
-|---|---|---|
-| `SUPER_ADMIN` | Home de graduado | Dashboard administrativo |
-| `ADMINISTRADOR` | Home de graduado | Dashboard administrativo |
-| `GRADUADO` | Home de graduado | Home de graduado; sin acceso administrativo |
+Descripción del proyecto
 
-## Configuración local
+El Sistema de Seguimiento a Graduados fue desarrollado como proyecto final del Diplomado UAJMS.
 
-`config/local.json` se mantiene fuera de Git. Cree una copia de la plantilla y agregue únicamente `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` (la clave `anon` legacy también es pública). No use claves `service_role` en el cliente.
+Tecnologías utilizadas
+Flutter - Desarrollo de la aplicación móvil.
+Dart - Lenguaje de programación.
+Supabase - Backend, autenticación y base de datos.
+PostgreSQL - Sistema gestor de base de datos.
+Provider - Gestión del estado de la aplicación.
+SharedPreferences - Persistencia de preferencias locales.
+fl_chart - Generación de gráficos estadísticos.
+Supabase Auth - Autenticación de usuarios.
+Row Level Security (RLS) - Control de acceso a los datos.
+Requisitos
 
-```bash
+Para ejecutar el proyecto se necesita:
+
+Flutter SDK.
+Dart SDK.
+Android Studio o Visual Studio Code.
+Dispositivo Android o emulador.
+Cuenta de Supabase.
+Proyecto de Supabase configurado.
+Instalación
+
+Clonar el repositorio:
+
+bash
+git clone URL_DEL_REPOSITORIO
+
+Entrar en la carpeta del proyecto:
+
+bash
+cd PROYECTO_Sistema_Seguimiento_Graduado
+
+Configuración de Supabase
+
+Crear un proyecto en Supabase y configurar la autenticación mediante:
+
+Authentication → Email / Password
+
+Posteriormente, ejecutar el script de base de datos incluido en:
+
+text
+supabase/01_schema_y_rls.sql
+
+Este script crea las tablas, relaciones, funciones, triggers, índices y políticas RLS necesarias para el funcionamiento del sistema.
+
+Configuración de credenciales
+
+Copiar el archivo de configuración de ejemplo:
+
+bash
 cp config/local.example.json config/local.json
-# Complete la URL y la clave pública en config/local.json
+
+Editar el archivo config/local.json con las credenciales del proyecto de Supabase.
+
+Ejecución del proyecto
+
+Instalar las dependencias:
+
+bash
 flutter pub get
+
+Ejecutar la aplicación conectada a Supabase:
+
+bash
 flutter run --dart-define-from-file=config/local.json
-```
 
-Si falta la configuración, la aplicación muestra una pantalla explicativa; no arranca con datos simulados.
+Generar APK de producción
 
-## Supabase
+Para generar el APK de producción conectado a Supabase, ejecutar:
 
-La base y sus políticas existentes se describen en `supabase/01_schema_y_rls.sql`. Para habilitar las estadísticas agregadas del dashboard, ejecute además `supabase/02_admin_dashboard_stats.sql` en el SQL Editor de Supabase. La función reutiliza `obtener_rol_usuario()`, corre con permisos del invocador y no modifica RLS.
-
-Las estadísticas de egreso y departamento se omiten si esas columnas no tienen datos. La distribución de respuestas se calcula para las opciones seleccionadas (incluye checkbox); las respuestas de texto libre no tienen categorías y no se representan como distribución.
-
-## Compilación
-
-```bash
+bash
 flutter build apk --release --dart-define-from-file=config/local.json
-flutter build web --release --dart-define-from-file=config/local.json
-```
 
-También se pueden inyectar variables en CI mediante `--dart-define`:
+El APK generado estará disponible en:
 
-```bash
-flutter build web --release \
-  --dart-define=SUPABASE_URL=https://TU-PROYECTO.supabase.co \
-  --dart-define=SUPABASE_PUBLISHABLE_KEY=TU_CLAVE_PUBLICA
-```
-
-Cloudflare Pages debe publicar `build/web`. Flutter Web genera una SPA y el archivo `web/_redirects` configura el fallback de rutas. Configure `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` como variables de entorno de build en Pages y use `bash scripts/build_web_cloudflare.sh` como comando de build; no coloque secretos en los assets web.
-
-## Funcionalidades
-
-El Home de graduado contiene perfil, encuestas/responder, historial y recomendaciones. La Web administrativa añade estadísticas, resultados, gestión de recomendaciones y creación de encuestas. La app verifica sesión y rol con `obtener_rol_usuario()`; RLS sigue siendo la protección efectiva de los datos.
+text
+build/app/outputs/flutter-apk/app-release.apk
