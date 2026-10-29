@@ -1,0 +1,46 @@
+﻿{
+    "timestamp":  "2026-10-13T03:25:02.6226353Z",
+    "scope":  "Read-only authentication, role RPC and RLS profile SELECT checks; no mutations",
+    "checks":  [
+                   {
+                       "expected":  "GRADUADO",
+                       "case":  "role_rpc",
+                       "observed":  "GRADUADO",
+                       "passed":  true
+                   },
+                   {
+                       "expected":  "SUPER_ADMIN",
+                       "case":  "role_rpc",
+                       "observed":  "SUPER_ADMIN",
+                       "passed":  true
+                   },
+                   {
+                       "passed":  true,
+                       "case":  "own_profile_select",
+                       "rowCount":  1,
+                       "role":  "GRADUADO"
+                   },
+                   {
+                       "passed":  true,
+                       "case":  "own_profile_select",
+                       "rowCount":  1,
+                       "role":  "SUPER_ADMIN"
+                   },
+                   {
+                       "passed":  false,
+                       "case":  "graduate_cannot_select_other_test_account_profile",
+                       "rowCount":  1,
+                       "role":  "GRADUADO"
+                   },
+                   {
+                       "passed":  true,
+                       "case":  "admin_can_select_test_graduate_profile",
+                       "rowCount":  1,
+                       "role":  "SUPER_ADMIN"
+                   },
+                   {
+                       "attempted":  false,
+                       "case":  "data_mutations"
+                   }
+               ]
+}

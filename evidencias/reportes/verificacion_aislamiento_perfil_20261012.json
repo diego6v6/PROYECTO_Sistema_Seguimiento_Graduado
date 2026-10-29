@@ -1,0 +1,27 @@
+﻿{
+    "timestamp":  "2026-10-13T03:27:07.8579179Z",
+    "checks":  [
+                   {
+                       "case":  "own_GRADUADO",
+                       "count":  1,
+                       "matchesTarget":  true
+                   },
+                   {
+                       "case":  "own_SUPER_ADMIN",
+                       "count":  1,
+                       "matchesTarget":  true
+                   },
+                   {
+                       "case":  "graduate_target_admin",
+                       "count":  0,
+                       "matchesTarget":  false
+                   },
+                   {
+                       "case":  "admin_target_graduate",
+                       "count":  1,
+                       "matchesTarget":  true
+                   }
+               ],
+    "isolatedGraduateCannotReadAdmin":  true,
+    "noMutations":  true
+}
